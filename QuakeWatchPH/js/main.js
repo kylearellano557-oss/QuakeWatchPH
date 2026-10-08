@@ -12,6 +12,8 @@ const aboutModal = document.getElementById("aboutModal");
 const showMessage = document.getElementById("showMessage");
 const searchbar = document.querySelector(".searchbar");
 const mainLogo = document.querySelector(".logo");
+const mapsection = document.querySelector(".mapsection");
+const dropdownarrow = document.querySelector(".fa-chevron-down");
 
 function earthquakeDetails(quake) {
     const date = new Date(quake.properties.time);
@@ -78,9 +80,16 @@ menuBtn.addEventListener("click", function() {
     
     if (navbar.classList.contains("active")) {
         if (searchbar) searchbar.style.display = "none";
+        dropdownarrow.style.display = "none";
+        mapsection.style.display = "none";
     
     } else {
         if (searchbar) searchbar.style.display = "block";
+        dropdownarrow.style.display = "block";
+        mapsection.style.display = "";
+        
+        dropdownarrow.classList.remove("arrowrotate");
+        mapsection.classList.remove("opendropdown");
     }
 });
 
@@ -148,11 +157,8 @@ if (selectedtheme === "dark") {
 }
 
 function dropDown() {
-    const mapsection = document.querySelector(".mapsection");
-    const arrow = document.querySelector(".fa-chevron-down");
-    
     mapsection.classList.toggle("opendropdown");
-    arrow.classList.toggle("arrowrotate");
+    dropdownarrow.classList.toggle("arrowrotate");
     
 }
 
