@@ -160,6 +160,8 @@ function dropDown() {
     mapsection.classList.toggle("opendropdown");
     dropdownarrow.classList.toggle("arrowrotate");
     
+    mapsection.style.backgroundColor = "#fff";
+    
 }
 
 function showFilters() {

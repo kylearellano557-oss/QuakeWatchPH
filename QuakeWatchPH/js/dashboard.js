@@ -1,7 +1,7 @@
 const currentdate = new Date();
 currentdate.setDate(currentdate.getDate() - 7);
 
-let targetMarker = null;
+let targetMarker = null
 const starttime = currentdate.toISOString().split("T")[0];
 const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${starttime}&orderby=time`; // World earthquake records
 const phUrl = `https://www.seismicportal.eu/fdsnws/event/1/query?format=json&minlatitude=4&maxlatitude=22&minlongitude=116&maxlongitude=127&starttime=${starttime}&orderby=time`; // Philippines earthquake records
@@ -161,8 +161,10 @@ fetch(url)
     });
     
     openTsunamiModal.addEventListener("click", function() {
+        let tsunamiFound = false;
         showTsunamiModal.style.display = "flex";
-        document.body.classList.add("modal-open")
+        document.body.classList.add("modal-open");
+        recentTsunami.innerHTML = "";
         
         tsunamiData.forEach(quake => {
             const magnitude = quake.properties.mag;
@@ -181,6 +183,8 @@ fetch(url)
             }
             
             if (quake.properties?.tsunami === 1) {
+                tsunamiFound = true;
+                
                 recentTsunami.innerHTML += `
                     <tr>
                         <td><strong style="color: ${color};">M ${magnitude}</strong></td>
@@ -188,14 +192,16 @@ fetch(url)
                         <td>${date.toLocaleString()}</td>
                     </tr>
                 `;
-            } else {
-                recentTsunami.innerHTML += `
-                    <tr>
-                        <td colspan="3" style="text-align:center;">No Tsunami Data</td>
-                    </tr>
-                `;
-            }
+            } 
         });
+        
+        if (!tsunamiFound) {
+            recentTsunami.innerHTML = `
+                <tr>
+                    <td colspan="3" style="text-align:center;">No Tsunami Detected.</td>
+                </tr>
+            `;
+        }
     });
     
     fetch(plates_url).then(response => {

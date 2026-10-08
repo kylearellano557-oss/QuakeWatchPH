@@ -79,12 +79,16 @@ body.modal-open {
     cursor: pointer;
     font-weight: 800;
     gap: 20px;
-    text-decoration: none;
     background: linear-gradient(90deg,#ff9800,#f44336);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+
+.headers .mapsection a {
+    text-decoration: none;
+    cursor: pointer;
+}
 
 .logo {
     margin: 0;
@@ -164,6 +168,10 @@ body.modal-open {
 .card h3 {
     font-size: 28px;
     margin: 10px 0;
+}
+
+.card sup {
+    cursor: pointer;
 }
 
 .dashboard-section {
@@ -502,11 +510,12 @@ tbody::-webkit-scrollbar-thumb {
     }
     
     .headers .mapsection {
-        display: none;
+        visibility: hidden;
     }
     
     .headers .opendropdown {
         display: grid;
+        visibility: visible;
         right: 0;
         position: absolute;
         transform: translateY(70px) translateX(-20px);
@@ -525,6 +534,7 @@ tbody::-webkit-scrollbar-thumb {
         gap: 10px;
         text-decoration: none;
         text-align: right;
+        cursor: pointer;
     }
 
     .logo {
@@ -640,4 +650,10 @@ tbody::-webkit-scrollbar-thumb {
         width: 100%;
     }
 
+}
+
+@media (width > 768px) {
+    .headers .fa-chevron-down {
+        display: none;
+    }
 }
