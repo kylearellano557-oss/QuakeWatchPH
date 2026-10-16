@@ -17,11 +17,26 @@ localStorage.removeItem("savedLat");
 localStorage.removeItem("savedLng");
 localStorage.removeItem("savedZoom");
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const defaultMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
-}).addTo(showMap);
+});
 
-L.control.zoom({position: 'bottomright'}).addTo(showMap); // Zoom buttons on map.
+const satelliteMap = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    attribution: "Tiles © Esri",
+});
+
+const savedMap = localStorage.getItem("mapType");
+
+if (savedMap === "satellite") {
+    satelliteMap.addTo(showMap);
+} else {
+    defaultMap.addTo(showMap);
+}
+
+const baseMaps = { "Street Map": defaultMap, "Satellite Map": satelliteMap };
+
+L.control.layers({ "Street Map": defaultMap,"Satellite Map": satelliteMap }, {}, { position: "bottomleft" }).addTo(showMap);
+L.control.zoom({position: 'bottomright'}).addTo(showMap); // Zoom buttons on map
 
 fetch(phUrl)
 .then(response => response.json())

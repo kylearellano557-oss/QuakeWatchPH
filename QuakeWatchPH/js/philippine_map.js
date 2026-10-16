@@ -18,12 +18,33 @@ localStorage.removeItem("savedLat");
 localStorage.removeItem("savedLng");
 localStorage.removeItem("savedZoom");
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+const defaultMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
-}).addTo(map);
+});
 
+const satelliteMap = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+    attribution: "Tiles © Esri",
+});
+
+const savedMap = localStorage.getItem("mapType");
+
+if (savedMap === "satellite") {
+    satelliteMap.addTo(map);
+} else {
+    defaultMap.addTo(map);
+}
+
+const baseMaps = { "Street Map": defaultMap, "Satellite Map": satelliteMap};
+
+L.control.layers({ "Street Map": defaultMap,"Satellite Map": satelliteMap }, {}, { position: "bottomleft" }).addTo(map);
 L.control.zoom({position: 'bottomright'}).addTo(map); // Zoom buttons on map
 L.control.locate({position: "bottomright",flyTo: true,setView: "once",keepCurrentZoomLevel: false,showCompass: true,strings: {title: "Show my location"}}).addTo(map); // Your Location on map
+
+map.on("baselayerchange", function (event) {
+    const mapType = event.name === "Satellite Map" ? "satellite" : "default";
+    localStorage.setItem("mapType", mapType);
+});
+
 
 urls.forEach(url => {
     fetch(url).then(response => {

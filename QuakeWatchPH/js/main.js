@@ -80,13 +80,19 @@ menuBtn.addEventListener("click", function() {
     
     if (window.innerWidth >= 768) {
         mapsection.style.display = "flex";
+        
+        if (navbar.classList.contains("active")) {
+            if (searchbar) searchbar.style.display = "none";
+        } else {
+            if (searchbar) searchbar.style.display = "block";
+        }
+        
     } else {
         if (navbar.classList.contains("active")) {
             if (searchbar) searchbar.style.display = "none";
             
             dropdownarrow.style.display = "none";
             mapsection.style.display = "none";
-            
             
         } else {
             if (searchbar) searchbar.style.display = "block";
@@ -97,7 +103,6 @@ menuBtn.addEventListener("click", function() {
             mapsection.classList.remove("opendropdown");
         }
     }
-    
 });
 
 mainLogo.addEventListener("click", function() {
