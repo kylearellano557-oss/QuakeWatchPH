@@ -94,7 +94,6 @@ menuBtn.addEventListener("click", function() {
             dropdownarrow.style.display = "none";
             mapsection.style.display = "none";
             
-            
         } else {
             if (searchbar) searchbar.style.display = "block";
             dropdownarrow.style.display = "block";
