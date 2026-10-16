@@ -79,13 +79,13 @@ menuBtn.addEventListener("click", function() {
     menuBtn.classList.toggle("fa-times");
     
     if (window.innerWidth >= 768) {
-        mapsection.style.display = "flex";
-        
         if (navbar.classList.contains("active")) {
             if (searchbar) searchbar.style.display = "none";
         } else {
             if (searchbar) searchbar.style.display = "block";
         }
+        
+        mapsection.style.display = "flex";
         
     } else {
         if (navbar.classList.contains("active")) {
@@ -93,6 +93,7 @@ menuBtn.addEventListener("click", function() {
             
             dropdownarrow.style.display = "none";
             mapsection.style.display = "none";
+            
             
         } else {
             if (searchbar) searchbar.style.display = "block";
