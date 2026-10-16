@@ -29,7 +29,7 @@ function earthquakeDetails(quake) {
     const tsunami = document.getElementById("tsunami");
     const alertlevel = document.getElementById("alertlevel");
     const status = document.getElementById("status");
-    const usgsurl = document.getElementById("usgsurl");
+    const source = document.getElementById("source");
     
     const magnitudeLevel = quake.properties.mag;
     let magnitudeColor = "";
@@ -50,7 +50,7 @@ function earthquakeDetails(quake) {
     }
     
     if (quake.properties.sources) {
-        earthquakeSource = "United States Geological Survey";
+        earthquakeSource = "USGS";
     } else {
         earthquakeSource = "SEISMIC PORTAL";
     }
@@ -64,7 +64,7 @@ function earthquakeDetails(quake) {
     tsunami.innerHTML = `Tsunami: ${quake.properties.tsunami ? "Yes" : "No"}`;
     alertlevel.innerHTML = `Alert Level: ${quake.properties.alert ?? "No Alerts"}</b>`;
     status.innerHTML = `Status: <b>${quake.properties.status ?? "Status unavailable"}</b>`;
-    usgsurl.innerHTML = `Source: <b>${earthquakeSource ?? "Source Unavailable"}</b>`;
+    source.innerHTML = `Source: <b>${earthquakeSource ?? "Source Unavailable"} </b>`
     
     modal.style.display = "flex";
     
@@ -78,19 +78,26 @@ menuBtn.addEventListener("click", function() {
     navbar.classList.toggle("active");
     menuBtn.classList.toggle("fa-times");
     
-    if (navbar.classList.contains("active")) {
-        if (searchbar) searchbar.style.display = "none";
-        dropdownarrow.style.display = "none";
-        mapsection.style.display = "none";
-    
+    if (window.innerWidth >= 768) {
+        mapsection.style.display = "flex";
     } else {
-        if (searchbar) searchbar.style.display = "block";
-        dropdownarrow.style.display = "block";
-        mapsection.style.display = "";
-        
-        dropdownarrow.classList.remove("arrowrotate");
-        mapsection.classList.remove("opendropdown");
+        if (navbar.classList.contains("active")) {
+            if (searchbar) searchbar.style.display = "none";
+            
+            dropdownarrow.style.display = "none";
+            mapsection.style.display = "none";
+            
+            
+        } else {
+            if (searchbar) searchbar.style.display = "block";
+            dropdownarrow.style.display = "block";
+            mapsection.style.display = "";
+            
+            dropdownarrow.classList.remove("arrowrotate");
+            mapsection.classList.remove("opendropdown");
+        }
     }
+    
 });
 
 mainLogo.addEventListener("click", function() {
