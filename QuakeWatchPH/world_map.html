@@ -135,27 +135,27 @@
                 <div class="modal-body">
                     <h3>Earthquake Levels</h3>
                     <div class="checkbox-group">
-                        <label class="minor">Minor (Below 3.0)</label>
+                        <label class="minor"><i class="fas fa-circle"></i> Minor (Below 3.0)</label>
                         <input type="checkbox" id="minorLevel" class="checkboxes" checked>
                     </div>
                     
                     <div class="checkbox-group">
-                        <label class="light">Light (3.0 - 4.9)</label>
+                        <label class="light"><i class="fas fa-circle"></i> Light (3.0 - 4.9)</label>
                         <input type="checkbox" id="lightLevel" class="checkboxes" checked>
                     </div>
                     
                     <div class="checkbox-group">
-                        <label class="moderate">Moderate (5.0 - 6.9)</label>
+                        <label class="moderate"><i class="fas fa-circle"></i> Moderate (5.0 - 6.9)</label>
                         <input type="checkbox" id="moderateLevel" class="checkboxes" checked>
                     </div>
                     
                     <div class="checkbox-group">
-                        <label class="strong">Strong (7.0 - 7.9)</label>
+                        <label class="strong"><i class="fas fa-circle"></i> Strong (7.0 - 7.9)</label>
                         <input type="checkbox" id="strongLevel" class="checkboxes" checked>
                     </div>
                     
                     <div class="checkbox-group">
-                        <label class="verystrong">Very Strong (8.0 - 8.9)</label>
+                        <label class="verystrong"><i class="fas fa-circle"></i> Very Strong (8.0 - 8.9)</label>
                         <input type="checkbox" id="veryStrongLevel" class="checkboxes" checked>
                     </div>
                     
@@ -205,6 +205,22 @@
                         <i class="fas fa-times"></i> Close
                     </button>
                     
+                </div>
+            </div>
+        </div>
+		
+		<div class="modal" id="checkInternetModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>No Internet Connection</h2>
+                </div>
+                
+                <div class="modal-body">
+                    <div style="text-align:center;margin-bottom:15px;">
+                        <p>Please check your internet connection and try again.</p>
+                    </div>
+ 
+                    <button class="close" onclick="location.reload()">Okay</button>
                 </div>
             </div>
         </div>
