@@ -15,6 +15,16 @@ const mainLogo = document.querySelector(".logo");
 const mapsection = document.querySelector(".mapsection");
 const dropdownarrow = document.querySelector(".fa-chevron-down");
 
+function checkConnection() {
+	const checkInternetModal = document.getElementById("checkInternetModal");
+	
+	if (navigator.onLine) {
+		checkInternetModal.style.display = "none";
+	} else {
+		checkInternetModal.style.display = "flex";
+	}
+}
+
 function earthquakeDetails(quake) {
     const date = new Date(quake.properties.time);
     const modal = document.querySelector(".modal");
@@ -77,7 +87,7 @@ menuBtn.addEventListener("click", function() {
     const navbar = document.querySelector(".navbar");
     navbar.classList.toggle("active");
     menuBtn.classList.toggle("fa-times");
-    
+	
     if (window.innerWidth >= 768) {
         if (navbar.classList.contains("active")) {
             if (searchbar) searchbar.style.display = "none";
@@ -287,3 +297,7 @@ function closeAbout() {
     aboutModal.style.display = "none";
     document.body.classList.remove("modal-open");
 }
+
+setInterval(() => {
+	checkConnection();
+}, 1000)

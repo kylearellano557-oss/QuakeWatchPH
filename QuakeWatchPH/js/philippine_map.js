@@ -187,10 +187,10 @@ urls.forEach(url => {
     });
 });
 
-searchQuake.addEventListener("input", function() {
-    
-    if (this.value.length === 0 || localStorage.getItem("showMarkers") === "false") {
+searchQuake.addEventListener("input", function() { 
+    if (this.value.length === 0 || localStorage.getItem("showMarkers") === "false" || this.value === "") {
         searchResults.innerHTML = "";
+		searchResults.style.display = "none";
         return;
     } else {
         searchResults.innerHTML = `
@@ -219,12 +219,7 @@ searchQuake.addEventListener("input", function() {
         });
         
         searchResults.innerHTML = "";
-        
-        if (keyword === "") {
-            searchResults.innerHTML = "";
-            searchResults.style.display = "none";
-            return;
-        }
+		searchResults.style.display = "none";
         
         if (results.length === 0) {
             searchResults.innerHTML = `
