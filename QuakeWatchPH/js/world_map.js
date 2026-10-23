@@ -109,7 +109,7 @@ fetch(url).then(response => {
             <h3>Earthquake Information</h3>
             <b>${place}</b><br>
             Magnitude: <b>${quake.properties.mag}</b><br>
-            Date: <b>${date.toLocaleDateString()}</b><br>
+            Date: <b>${date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</b><br>
             Time: <b>${date.toLocaleTimeString()}</b><br>
             <button class="details-btn">More details</button>
         `);

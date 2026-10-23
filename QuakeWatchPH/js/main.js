@@ -15,16 +15,6 @@ const mainLogo = document.querySelector(".logo");
 const mapsection = document.querySelector(".mapsection");
 const dropdownarrow = document.querySelector(".fa-chevron-down");
 
-function checkConnection() {
-	const checkInternetModal = document.getElementById("checkInternetModal");
-	
-	if (navigator.onLine) {
-		checkInternetModal.style.display = "none";
-	} else {
-		checkInternetModal.style.display = "flex";
-	}
-}
-
 function earthquakeDetails(quake) {
     const date = new Date(quake.properties.time);
     const modal = document.querySelector(".modal");
@@ -35,7 +25,8 @@ function earthquakeDetails(quake) {
     const latitude = document.getElementById("latitude");
     const longitude = document.getElementById("longitude");
     const depth = document.getElementById("depth");
-    const datetime = document.getElementById("datetime");
+    const earthquakedate = document.getElementById("earthquakedate");
+    const earthquaketime = document.getElementById("earthquaketime");
     const tsunami = document.getElementById("tsunami");
     const alertlevel = document.getElementById("alertlevel");
     const status = document.getElementById("status");
@@ -70,7 +61,8 @@ function earthquakeDetails(quake) {
     longitude.innerHTML = `Longitude: ${quake.geometry.coordinates[0]}`;
     latitude.innerHTML = `Latitude: ${quake.geometry.coordinates[1]}`;
     depth.innerHTML = `Depth: ${quake.geometry.coordinates[2]} km`;
-    datetime.innerHTML = `Date and Time: ${date.toLocaleString()}`;
+    earthquakedate.innerHTML = `Date: ${date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
+    earthquaketime.innerHTML = `Time: ${date.toLocaleTimeString()}`
     tsunami.innerHTML = `Tsunami: ${quake.properties.tsunami ? "Yes" : "No"}`;
     alertlevel.innerHTML = `Alert Level: ${quake.properties.alert ?? "No Alerts"}</b>`;
     status.innerHTML = `Status: <b>${quake.properties.status ?? "Status unavailable"}</b>`;
@@ -297,7 +289,3 @@ function closeAbout() {
     aboutModal.style.display = "none";
     document.body.classList.remove("modal-open");
 }
-
-setInterval(() => {
-	checkConnection();
-}, 1000)
