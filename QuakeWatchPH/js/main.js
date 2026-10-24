@@ -144,6 +144,8 @@ function openSettings() {
         localStorage.setItem("theme", theme);
         localStorage.setItem("quakeFilter", quakeFilter);
         
+        settingModal.remove();
+        
         Swal.fire("Success", "Setting saved successfully!", "success").then(() => { location.reload(); });
     };
 }
@@ -243,6 +245,8 @@ function showFilters() {
         localStorage.setItem("strongLevel", strongLevel);
         localStorage.setItem("veryStrongLevel", veryStrongLevel);
         localStorage.setItem("destructiveLevel", destructiveLevel);
+        
+        filterModal.remove();
         
         Swal.fire("Success", "Filter saved successfully.", "success").then(() => { location.reload(); });
     }

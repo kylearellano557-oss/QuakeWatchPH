@@ -216,7 +216,11 @@ searchQuake.addEventListener("input", function() {
         searchResults.innerHTML = "";
         searchResults.style.display = "none";
         
-        if (results.length === 0) {
+        if (keyword === "") {
+            searchResults.innerHTML = "";
+            searchResults.style.display = "none";
+            return;
+        } else if (results.length === 0) {
             searchResults.innerHTML = `
                 <div class="no-item-results">
                     No Results of "${keyword}"
@@ -225,21 +229,19 @@ searchQuake.addEventListener("input", function() {
             
             searchResults.style.display = "block";
             return;
-        }
-        
-        if (localStorage.getItem("showMarkers") === "false") {
+        } else if (localStorage.getItem("showMarkers") === "false") {
             searchResults.innerHTML = "";
             searchResults.style.display = "none";
             return;
+        } else {
+            results.forEach(quake => {
+                searchResults.innerHTML += `
+                    <div class="item-results">
+                        ${quake.properties.place}
+                    </div>
+                `;
+            });
         }
-        
-        results.forEach(quake => {
-            searchResults.innerHTML += `
-                <div class="item-results">
-                    ${quake.properties.place}
-                </div>
-            `;
-        });
         
         searchResults.style.display = results.length > 0 ? "block" : "none";
         const itemResult = document.querySelectorAll(".item-results");
