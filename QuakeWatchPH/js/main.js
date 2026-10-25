@@ -165,6 +165,7 @@ function darkTheme() {
     document.querySelectorAll(".headers, .navbar, #dashboard, .modal-body").forEach(element => { element.style.background = "#111"; });
     document.querySelectorAll(".modal-content, #dashboard").forEach(element => { element.style.color = "#fff"; });
     document.querySelectorAll("#quakeChart, .table-container").forEach(element => { element.style.background = "#fff"; });
+    document.querySelector(".table-container").forEach(element => { element.style.color = "#111"; });
     document.querySelectorAll(".nav-links li a").forEach(link => { link.style.color = "#fff"; });
     document.querySelectorAll(".card").forEach(card => { card.style.color = "#111"; });
 }
