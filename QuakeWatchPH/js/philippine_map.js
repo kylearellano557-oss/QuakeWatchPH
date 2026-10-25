@@ -80,7 +80,7 @@ urls.forEach(url => {
                 color: "#fff", 
                 weight: 1, 
                 opacity: 1, 
-                fillOpacity: 0.8 
+                fillOpacity: 0.8
             });
             
             if (magnitude < 3.0 && localStorage.getItem("minorLevel") !== "false") {

@@ -131,6 +131,17 @@ function openSettings() {
     document.querySelector("#theme").value = localStorage.getItem("theme") || "light";
     document.querySelector("#quakeFilter").value = localStorage.getItem("quakeFilter") || "7";
     
+    document.querySelector("#quakeFilter").addEventListener("change", function() {
+        const messageSetting = document.getElementById("messageSetting");
+        if (this.value === "30") {
+            messageSetting.style.display = "block";
+            messageSetting.textContent = "Note: Selecting this option will take longer to load.";
+        } else {
+            messageSetting.style.display = "none";
+            messageSetting.textContent = "";
+        }
+    })
+    
     saveSettings.onclick = function() {
         const showMarkers = document.getElementById("showMarkers").checked;
         const showPlates = document.getElementById("showPlates").checked;
@@ -151,18 +162,15 @@ function openSettings() {
 }
 
 function darkTheme() {
-    document.querySelector(".headers").style.background = "#111";
-    document.querySelector(".modal-body").style.background = "#111";
-    document.querySelector(".modal-content").style.color = "#fff";
-    document.querySelector(".navbar").style.background = "#111";
+    document.querySelectorAll(".headers, .navbar, #dashboard, .modal-body").forEach(element => { element.style.background = "#111"; });
+    document.querySelectorAll(".modal-content, #dashboard").forEach(element => { element.style.color = "#fff"; });
+    document.querySelectorAll("#quakeChart, .table-container").forEach(element => { element.style.background = "#fff"; });
     document.querySelectorAll(".nav-links li a").forEach(link => { link.style.color = "#fff"; });
+    document.querySelectorAll(".card").forEach(card => { card.style.color = "#111"; });
 }
 
 function lightTheme() {
-    document.querySelector(".headers").style.background = "#fff";
-    document.querySelector(".modal-content").style.background = "#fff";
-    document.querySelector(".modal-content").style.color = "#111";
-    document.querySelector(".navbar").style.background = "#fff";
+    document.querySelectorAll(".headers, .navbar, .modal-content").forEach(element => {element.style.background = "#fff"; });
     document.querySelectorAll(".nav-links li a").forEach(link => { link.style.color = "#111"; });
 }
 
