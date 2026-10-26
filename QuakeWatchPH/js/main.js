@@ -14,6 +14,7 @@ const searchbar = document.querySelector(".searchbar");
 const mainLogo = document.querySelector(".logo");
 const mapsection = document.querySelector(".mapsection");
 const dropdownarrow = document.querySelector(".fa-chevron-down");
+const indexpage = window.location.pathname.split("/").pop();
 
 function earthquakeDetails(quake) {
     const date = new Date(quake.properties.time);
@@ -79,7 +80,7 @@ menuBtn.addEventListener("click", function() {
     const navbar = document.querySelector(".navbar");
     navbar.classList.toggle("active");
     menuBtn.classList.toggle("fa-times");
-	
+    
     if (window.innerWidth >= 768) {
         if (navbar.classList.contains("active")) {
             if (searchbar) searchbar.style.display = "none";
@@ -87,20 +88,22 @@ menuBtn.addEventListener("click", function() {
             if (searchbar) searchbar.style.display = "block";
         }
         
-        mapsection.style.display = "flex";
+        if (indexpage != "index.html") return;
         
+        mapsection.style.display = "flex";
     } else {
         if (navbar.classList.contains("active")) {
             if (searchbar) searchbar.style.display = "none";
+            if (indexpage != "index.html") return;
             
             dropdownarrow.style.display = "none";
             mapsection.style.display = "none";
-            
         } else {
             if (searchbar) searchbar.style.display = "block";
+            if (indexpage != "index.html") return;
+            
             dropdownarrow.style.display = "block";
             mapsection.style.display = "";
-            
             dropdownarrow.classList.remove("arrowrotate");
             mapsection.classList.remove("opendropdown");
         }
@@ -108,8 +111,6 @@ menuBtn.addEventListener("click", function() {
 });
 
 mainLogo.addEventListener("click", function() {
-    const indexpage = window.location.pathname.split("/").pop();
-    
     if (indexpage === "index.html") {
         window.location.href = "#";
     } else {
@@ -124,6 +125,11 @@ function openSettings() {
     menuBtn.classList.toggle("fa-times");
     
     if (searchbar) searchbar.style.display = "block";
+    
+    if (indexpage === "index.html") {
+        dropdownarrow.style.display = "flex";
+        mapsection.style.display = "";
+    }
     
     document.querySelector("#showMarkers").checked = localStorage.getItem("showMarkers") !== "false";
     document.querySelector("#showPlates").checked = localStorage.getItem("showPlates") === "true";
