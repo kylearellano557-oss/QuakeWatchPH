@@ -171,19 +171,15 @@ function darkTheme() {
     document.querySelectorAll(".headers, .navbar, #dashboard, .modal-body").forEach(element => { element.style.background = "#111"; });
     document.querySelectorAll(".modal-content, #dashboard").forEach(element => { element.style.color = "#fff"; });
     document.querySelectorAll("#quakeChart, .table-container #recentEarthquakes").forEach(element => { element.style.background = "#222"; element.style.color = "#fff"; });
+    document.querySelectorAll("#searchquake, #searchResults").forEach(search => { search.style.background = "#111"; search.style.color = "#fff"; });
+    document.querySelectorAll(".leaflet-control-zoom-in, .leaflet-control-zoom-out, .leaflet-bar-part, .leaflet-control-layers").forEach(controls => { controls.style.background = "#111"; controls.style.color = "#fff"; });
+    document.querySelectorAll(".leaflet-control-locate-location-arrow").forEach(icon => { icon.style.background = "#fff"; });
     document.querySelectorAll(".nav-links li a").forEach(link => { link.style.color = "#fff"; });
     document.querySelectorAll(".card").forEach(card => { card.style.color = "#fff"; card.style.background = "#222"; });
 }
 
-function lightTheme() {
-    document.querySelectorAll(".headers, .navbar, .modal-content").forEach(element => {element.style.background = "#fff"; });
-    document.querySelectorAll(".nav-links li a").forEach(link => { link.style.color = "#111"; });
-}
-
 if (selectedtheme === "dark") {
     darkTheme();
-} else {
-    lightTheme();
 }
 
 function dropDown() {
@@ -191,7 +187,6 @@ function dropDown() {
     dropdownarrow.classList.toggle("arrowrotate");
     
     mapsection.style.backgroundColor = "#fff";
-    
 }
 
 function showFilters() {

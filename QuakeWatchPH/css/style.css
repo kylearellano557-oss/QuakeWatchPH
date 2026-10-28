@@ -178,6 +178,14 @@ body.modal-open {
     margin-top: 25px;
 }
 
+#quakeChart {
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0,0,0,.15);
+    padding: 5px;
+    border-radius: 10px;
+    background: #fff;
+}
+
 .table-container {
     max-height: 350px;
     overflow-y: auto;

@@ -12,6 +12,7 @@ const searchResults = document.getElementById("searchResults");
 const savedLat = localStorage.getItem("savedLat");
 const savedLng = localStorage.getItem("savedLng");
 const savedZoom = localStorage.getItem("savedZoom");
+const savedMap = localStorage.getItem("mapType");
 localStorage.removeItem("savedLatPH");
 localStorage.removeItem("savedLngPH");
 localStorage.removeItem("savedZoomPH");
@@ -23,8 +24,6 @@ const defaultMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.p
 const satelliteMap = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
     attribution: "Tiles © Esri",
 });
-
-const savedMap = localStorage.getItem("mapType");
 
 if (savedMap === "satellite") {
     satelliteMap.addTo(map);
@@ -185,7 +184,7 @@ fetch(url).then(response => {
 searchQuake.addEventListener("input", function() {
     if (this.value.length === 0 || localStorage.getItem("showMarkers") === "false" || this.value === "") {
         searchResults.innerHTML = "";
-		searchResults.style.display = "none";
+        searchResults.style.display = "none";
         return;
     } else {
         searchResults.innerHTML = `
