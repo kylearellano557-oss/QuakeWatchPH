@@ -1,9 +1,12 @@
 const currentdate = new Date();
 const filterDate = Number(localStorage.getItem("quakeFilter") || 7);
-currentdate.setDate(currentdate.getDate() - filterDate);
-
-const starttime = currentdate.toISOString().split("T")[0];
-const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${starttime}&orderby=time`;
+const starttime = new Date(currentdate);
+starttime.setUTCDate(currentdate.getUTCDate() - (filterDate - 1));
+starttime.setUTCHours(0, 0, 0, 0);
+const endtime = new Date(currentdate);
+const startdate = starttime.toISOString();
+const enddate = endtime.toISOString();
+const url = `https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=${startdate}&endtime=${enddate}&orderby=time`;
 const map = L.map('map', { zoomControl: false, minZoom: 2, maxBounds: [[-85.0511, -200], [85.0511, 200]], maxBoundsViscosity: 0.8 });
 const plates_url = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 const faultlines_url = "https://raw.githubusercontent.com/GEMScienceTools/gem-global-active-faults/master/geojson/gem_active_faults.geojson";
@@ -45,13 +48,16 @@ map.on("baselayerchange", function (event) {
 fetch(url).then(response => {
     return response.json();
 }).then(data => {
-
-    data.features.forEach(quake => {
-        
+    const earthquakeData = data.features.filter(quake => {
+        const quakeTime = new Date(quake.properties.time);
+        return (quakeTime >= starttime && quakeTime <= currentdate && quake.properties.mag >= 1.0);
+    });
+    
+    earthquakeData.forEach(quake => {
         let color;
         let lat = quake.geometry.coordinates[1];
         let lng = quake.geometry.coordinates[0];
-        const place = quake.properties.place ?? quake.properties.flynn_region ?? quake.properties.region ?? "Unknown Location";
+        const place = quake.properties.place ?? "Unknown Location";
         const magnitude = quake.properties.mag;
         const date = new Date(quake.properties.time);
         
@@ -186,13 +192,9 @@ searchQuake.addEventListener("input", function() {
         searchResults.innerHTML = "";
         searchResults.style.display = "none";
         return;
-    } else {
-        searchResults.innerHTML = `
-            <div class="item-results">
-                Searching...
-            </div>
-        `;
     }
+    
+    searchResults.innerHTML = `<div class="item-results">Searching...</div>`;
     
     fetch(url).then(response => {
         return response.json();

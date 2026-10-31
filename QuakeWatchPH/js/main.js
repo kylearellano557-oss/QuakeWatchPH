@@ -1,4 +1,5 @@
 const menuBtn = document.getElementById("menuBtn");
+const notificationModal = document.getElementById("notificationModal");
 const settingModal = document.querySelector("#settingModal");
 const selectedtheme = localStorage.getItem("theme");
 const navbar = document.querySelector(".navbar");
@@ -17,7 +18,7 @@ const dropdownarrow = document.querySelector(".fa-chevron-down");
 const indexpage = window.location.pathname.split("/").pop();
 
 function earthquakeDetails(quake) {
-    const date = new Date(quake.properties.time);
+    const date = new Date(quake.properties?.time ?? quake.timestamp_iso);
     const modal = document.querySelector(".modal");
     const closeModal = document.querySelector(".close");
     const closeBtn = document.getElementById("closeBtn");
@@ -32,8 +33,9 @@ function earthquakeDetails(quake) {
     const alertlevel = document.getElementById("alertlevel");
     const status = document.getElementById("status");
     const source = document.getElementById("source");
+    const url = document.getElementById("url");
     
-    const magnitudeLevel = quake.properties.mag;
+    const magnitudeLevel = quake.properties?.mag ?? quake.magnitude;
     let magnitudeColor = "";
     let earthquakeSource;
     
@@ -51,23 +53,24 @@ function earthquakeDetails(quake) {
         magnitudeColor = "darkviolet";
     }
     
-    if (quake.properties.sources) {
+    if (quake.properties?.sources) {
         earthquakeSource = "USGS";
     } else {
-        earthquakeSource = "SEISMIC PORTAL";
+        earthquakeSource = "PHIVOLCS";
     }
     
-    location.innerHTML = `Location: <b>${quake.properties.place ?? quake.properties.flynn_region ?? quake.properties.region}</b>`;
+    location.innerHTML = `Location: <b>${quake.properties?.place ?? quake.location}</b>`;
     magnitude.innerHTML = `Magnitude: <b style="font-size: 20px; color: ${magnitudeColor}"> ${magnitudeLevel}</b>`;
-    longitude.innerHTML = `Longitude: ${quake.geometry.coordinates[0]}`;
-    latitude.innerHTML = `Latitude: ${quake.geometry.coordinates[1]}`;
-    depth.innerHTML = `Depth: ${quake.geometry.coordinates[2]} km`;
+    longitude.innerHTML = `Longitude: ${quake.geometry?.coordinates[0] ?? quake.longitude}`;
+    latitude.innerHTML = `Latitude: ${quake.geometry?.coordinates[1] ?? quake.latitude}`;
+    depth.innerHTML = `Depth: ${quake.geometry?.coordinates[2] ?? quake.depth_km} km`;
     earthquakedate.innerHTML = `Date: ${date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`;
     earthquaketime.innerHTML = `Time: ${date.toLocaleTimeString()}`
-    tsunami.innerHTML = `Tsunami: ${quake.properties.tsunami ? "Yes" : "No"}`;
-    alertlevel.innerHTML = `Alert Level: ${quake.properties.alert ?? "No Alerts"}</b>`;
-    status.innerHTML = `Status: <b>${quake.properties.status ?? "Status unavailable"}</b>`;
-    source.innerHTML = `Source: <b>${earthquakeSource ?? "Source Unavailable"} </b>`
+    tsunami.innerHTML = `Tsunami: ${quake.properties?.tsunami ? "Yes" : "No"}`;
+    alertlevel.innerHTML = `Alert Level: ${quake.properties?.alert ?? "No Alerts"}</b>`;
+    status.innerHTML = `Status: <b>${quake.properties?.status ?? "Status unavailable"}</b>`;
+    source.innerHTML = `Source: <b>${earthquakeSource ?? "Source Unavailable"} </b>`;
+    url.innerHTML = `Earthquake URL: <b><a href="${quake.properties?.url.replace(/\\/g, "/") ?? quake.bulletin_url.replace(/\\/g, "/")}" target="_blank">${quake.properties?.url ?? quake.bulletin_url}</a></b>`;
     
     modal.style.display = "flex";
     
