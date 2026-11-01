@@ -33,7 +33,7 @@ QuakeWatch-PH/
 ├── css/
 │   └── style.css
 └── js/
-    ├── map.js
+    ├── world_map.js
     ├── philippine_map.js
     ├── dashboard.js
     └── main.js
@@ -45,14 +45,14 @@ File| Description
 "philippine_map.html"| Philippine earthquake map
 "world_map.html"| World earthquake map
 "css/style.css"| Main stylesheet
-"js/map.js"| Map-related functionality
+"js/world_map.js"| Map-related functionality
 "js/philippine_map.js"| Philippine map functionality
 "js/dashboard.js"| Dashboard data and components
 "js/main.js"| Main application functionality
 
 🌐 Data Source
 
-QuakeWatch PH uses earthquake information provided by the U.S. Geological Survey (USGS) and SEISMIC PORTAL earthquake data service.
+QuakeWatch PH uses earthquake information provided by the U.S. Geological Survey (USGS) and Philippine Institute of Volcanology and Seismology (PHIVOLCS) earthquake data provided by GarbinWx.
 
 Earthquake information may include:
 
