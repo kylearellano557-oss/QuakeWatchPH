@@ -11,10 +11,13 @@ const showTsunamiModal = document.getElementById("showTsunamiModal");
 const saveFilters = document.getElementById("saveFilters");
 const aboutModal = document.getElementById("aboutModal");
 const showMessage = document.getElementById("showMessage");
+const earthquakeList = document.getElementById("earthquakeLists");
+const earthquakeListPanel = document.querySelector(".earthquakelist-panel");
 const searchbar = document.querySelector(".searchbar");
 const mainLogo = document.querySelector(".logo");
 const mapsection = document.querySelector(".mapsection");
 const dropdownarrow = document.querySelector(".fa-chevron-down");
+const dropuparrow = document.querySelector(".fa-chevron-up");
 const indexpage = window.location.pathname.split("/").pop();
 
 function earthquakeDetails(quake) {
@@ -86,9 +89,11 @@ menuBtn.addEventListener("click", function() {
     
     if (window.innerWidth >= 768) {
         if (navbar.classList.contains("active")) {
-            if (searchbar) searchbar.style.display = "none";
+            searchbar.style.display = "none";
+            earthquakeListPanel.style.display = "none";
         } else {
-            if (searchbar) searchbar.style.display = "block";
+            searchbar.style.display = "block";
+            earthquakeListPanel.style.display = "block";
         }
         
         if (indexpage != "index.html") return;
@@ -96,15 +101,13 @@ menuBtn.addEventListener("click", function() {
         mapsection.style.display = "flex";
     } else {
         if (navbar.classList.contains("active")) {
-            if (searchbar) searchbar.style.display = "none";
+            searchbar.style.display = "none";
             if (indexpage != "index.html") return;
-            
             dropdownarrow.style.display = "none";
             mapsection.style.display = "none";
         } else {
-            if (searchbar) searchbar.style.display = "block";
+            searchbar.style.display = "block";
             if (indexpage != "index.html") return;
-            
             dropdownarrow.style.display = "block";
             mapsection.style.display = "";
             dropdownarrow.classList.remove("arrowrotate");
@@ -127,16 +130,24 @@ function openSettings() {
     navbar.classList.remove("active");
     menuBtn.classList.toggle("fa-times");
     
-    if (searchbar) searchbar.style.display = "block";
-    
     if (indexpage === "index.html") {
         dropdownarrow.style.display = "flex";
         mapsection.style.display = "";
     }
     
+    if (searchbar && earthquakeListPanel) {
+        searchbar.style.display = "block";
+        earthquakeListPanel.style.display = "block";
+    }
+    
+    if (window.innerWidth <= 768 && earthquakeListPanel) {
+        earthquakeListPanel.remove();
+    }
+    
     document.querySelector("#showMarkers").checked = localStorage.getItem("showMarkers") !== "false";
     document.querySelector("#showPlates").checked = localStorage.getItem("showPlates") === "true";
     document.querySelector("#showFaults").checked = localStorage.getItem("showFaults") === "true";
+    document.querySelector("#showLists").checked = localStorage.getItem("showLists") !== "false";
     document.querySelector("#theme").value = localStorage.getItem("theme") || "light";
     document.querySelector("#quakeFilter").value = localStorage.getItem("quakeFilter") || "7";
     
@@ -149,18 +160,20 @@ function openSettings() {
             messageSetting.style.display = "none";
             messageSetting.textContent = "";
         }
-    })
+    });
     
     saveSettings.onclick = function() {
         const showMarkers = document.getElementById("showMarkers").checked;
         const showPlates = document.getElementById("showPlates").checked;
         const showFaults = document.getElementById("showFaults").checked;
+        const showLists = document.getElementById("showLists").checked;
         const theme = document.getElementById('theme').value;
         const quakeFilter = document.getElementById("quakeFilter").value;
 
         localStorage.setItem("showMarkers", showMarkers);
         localStorage.setItem("showPlates", showPlates);
         localStorage.setItem("showFaults", showFaults);
+        localStorage.setItem("showLists", showLists);
         localStorage.setItem("theme", theme);
         localStorage.setItem("quakeFilter", quakeFilter);
         
@@ -175,6 +188,7 @@ function darkTheme() {
     document.querySelectorAll(".modal-content, #dashboard").forEach(element => { element.style.color = "#fff"; });
     document.querySelectorAll("#quakeChart, .table-container #recentEarthquakes").forEach(element => { element.style.background = "#222"; element.style.color = "#fff"; });
     document.querySelectorAll("#searchquake, #searchResults").forEach(search => { search.style.background = "#111"; search.style.color = "#fff"; });
+    document.querySelectorAll(".earthquake-list-title, #earthquakeLists").forEach(list => { list.style.background = "#11111188"; list.style.color = "#fff"; });
     document.querySelectorAll(".leaflet-control-zoom-in, .leaflet-control-zoom-out, .leaflet-bar-part, .leaflet-control-layers").forEach(controls => { controls.style.background = "#111"; controls.style.color = "#fff"; });
     document.querySelectorAll(".leaflet-control-locate-location-arrow").forEach(icon => { icon.style.background = "#fff"; });
     document.querySelectorAll(".nav-links li a").forEach(link => { link.style.color = "#fff"; });
@@ -185,11 +199,24 @@ if (selectedtheme === "dark") {
     darkTheme();
 }
 
+if (localStorage.getItem("showLists") === "false") {
+    earthquakeListPanel.remove();
+} else if (window.innerWidth <= 768) {
+    earthquakeListPanel.style.display = "none";
+} else {
+    earthquakeListPanel.style.display = "block";
+}
+
 function dropDown() {
     mapsection.classList.toggle("opendropdown");
     dropdownarrow.classList.toggle("arrowrotate");
     
     mapsection.style.backgroundColor = "#fff";
+}
+
+function showquakeList() {
+	dropuparrow.classList.toggle("arrowup");
+	earthquakeLists.classList.toggle("earthquakelists");
 }
 
 function showFilters() {
@@ -271,8 +298,13 @@ function openAbout() {
     document.body.classList.add("modal-open");
     const currentPage = window.location.pathname.split("/").pop();
     
-    if (currentPage !== "index.html" && searchbar) {
+    if (currentPage !== "index.html" && searchbar && earthquakeListPanel) {
         searchbar.style.display = "block";
+        earthquakeListPanel.style.display = "block";
+    }
+    
+    if (window.innerWidth <= 768 && earthquakeListPanel) {
+        earthquakeListPanel.style.display = "none";
     }
 }
 

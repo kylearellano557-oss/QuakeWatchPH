@@ -17,7 +17,7 @@
     <body>
         <div class="headers">
             <span class="fas fa-bars" id="menuBtn"></span>
-            <h2 class="logo">QuakeWatch PH</h2>
+            <h2 class="logo">QuakeWatch PH <img src="https://lh3.googleusercontent.com/d/1PyfLnqgtkG-Oyk_eZi3TL_C2CFlQW_JZ" ></h2>
             <span class="fa-solid fa-filter" onclick="showFilters()"></span>
         </div>
         
@@ -38,6 +38,11 @@
         <div class="searchbar">
             <input type="search" name="searchquake" id="searchquake" placeholder="Search Places to Find Earthquakes" />
             <div id="searchResults"></div>
+        </div>
+        
+        <div class="earthquakelist-panel">
+            <p class="earthquake-list-title">Earthquake Lists <span class="fas fa-chevron-up" onclick="showquakeList()"></span></p>
+            <div id="earthquakeLists"></div>
         </div>
         
         <div class="modal" >
@@ -100,6 +105,11 @@
                         <div class="show-faults">
                             <label>Show Fault Lines</label>
                             <input type="checkbox" id="showFaults">
+                        </div>
+                        
+                        <div class="show-lists">
+                            <label>Show Earthquake Lists</label>
+                            <input type="checkbox" id="showLists">
                         </div>
                     </div>
                     <hr>
@@ -192,7 +202,7 @@
                 
                 <div class="modal-body">
                     <div style="text-align:center;margin-bottom:15px;">
-                        <h2 class="logo">QuakeWatch PH</h2>
+                        <h2 class="logo">QuakeWatch PH <img src="https://lh3.googleusercontent.com/d/1PyfLnqgtkG-Oyk_eZi3TL_C2CFlQW_JZ" ></h2>
                         <p>Real-Time Earthquake Monitoring System</p>
                     </div>
                     

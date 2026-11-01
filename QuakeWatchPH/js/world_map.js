@@ -127,6 +127,37 @@ fetch(url).then(response => {
                 earthquakeDetails(quake);
             });
         });
+        
+        const earthquakedetail = document.querySelector("#earthquakeLists");
+        const div = document.createElement("div");
+        
+        div.className = "earthquake-detail";
+        div.textContent = `M ${quake.properties.mag} - ${quake.properties.place}`;
+        
+        div.addEventListener("click", function() {
+            map.flyTo([lat, lng], 8);
+            
+            L.popup()
+            .setLatLng([lat, lng])
+            .setContent(`
+                <h3>Earthquake Information</h3>
+                <b>${quake.properties.place}</b><br>
+                Magnitude: <b>${quake.properties.mag}</b><br>
+                Date: <b>${date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</b><br>
+                Time: <b>${date.toLocaleTimeString()}</b><br>
+                <button class="details-btn">More details</button>
+            `)
+            .openOn(map);
+            
+            const detailsBtn = document.querySelector(".details-btn");
+            
+            detailsBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                earthquakeDetails(quake);
+            });
+        });
+        
+        earthquakedetail.appendChild(div);
     });
     
     map.on("moveend", function() {

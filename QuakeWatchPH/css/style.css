@@ -106,6 +106,11 @@ body.modal-open {
     color: #e53935;
 }
 
+.logo img {
+    width: 20px;
+    height: 20px;
+}
+
 .navbar {
     top: 50px;
     left: -260px;
@@ -222,8 +227,8 @@ body.modal-open {
 .searchbar {
     position: absolute;
     top: 80px;
-    left: 20%;
-    transform: translateX(-50%);
+    left: 60px;
+    transform: translateX(-40px);
     width: calc(100vw - 70vw);
     z-index: 997;
 }
@@ -238,7 +243,7 @@ body.modal-open {
 }
 
 #searchResults {
-	display: none;
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
@@ -263,6 +268,69 @@ body.modal-open {
     background: linear-gradient(90deg,#ff9800,#f44336);
     color: #fff;
     cursor: pointer;
+}
+
+.earthquakelist-panel {
+    position: absolute;
+    top: 60px;
+    right: -60px;
+    transform: translateX(-75px);
+    width: calc(100vw - 70vw);
+    z-index: 997;
+}
+
+.earthquake-list-title {
+    width: 100%;
+    padding: 10px;
+    font-family: 'Poppins',sans-serif;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #ffffffaa;
+}
+
+.earthquake-list-title span {
+    position: absolute;
+    right: 0;
+    transform: translate(-10px, 3px);
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.earthquake-list-title .arrowup {
+    position: absolute;
+    right: 0;
+    transform: translate(-10px, 3px) rotate(180deg);
+    cursor: pointer;
+}
+
+#earthquakeLists {
+    position: relative;
+    visibility: visible;
+    background-color: #ffffffaa;
+    border-radius: 5px;
+    height: 50vh;
+    transform: translate(0px, -16px);
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#earthquakeLists.earthquakelists {
+    visibility: hidden;
+}
+
+#earthquakeLists .earthquake-detail {
+    cursor: pointer;
+    border: solid 1px #aaa;
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#earthquakeLists .earthquake-detail:hover {
+    color: #fff;
+    background: linear-gradient(90deg,#ff9800,#f44336);
 }
 
 .modal {
@@ -375,15 +443,6 @@ body.modal-open {
     margin-right: 8px;
 }
 
-.modal-body::-webkit-scrollbar {
-    width: 5px;
-}
-
-.modal-body::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: linear-gradient(90deg,#ff9800,#f44336);
-}
-
 .button-group {
     display: flex;
     position: relative;
@@ -396,7 +455,7 @@ body.modal-open {
     gap: 20px;
 }
 
-.show-markers, .show-plates, .show-faults {
+.show-markers, .show-plates, .show-faults, .show-lists {
     display: flex;
     justify-content: space-between;
 }
@@ -471,11 +530,11 @@ body.modal-open {
     padding: 10px;
 }
 
-tbody::-webkit-scrollbar {
+.modal-body::-webkit-scrollbar, .table-container::-webkit-scrollbar, #earthquakeLists::-webkit-scrollbar {
     width: 5px;
 }
 
-tbody::-webkit-scrollbar-thumb {
+.modal-body::-webkit-scrollbar-thumb, .table-container::-webkit-scrollbar-thumb, #earthquakeLists::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: linear-gradient(90deg,#ff9800,#f44336);
 }
@@ -614,8 +673,12 @@ tbody::-webkit-scrollbar-thumb {
     }
     
     .searchbar {
-        left: 50%;
+        left: 70px;
         width: calc(100vw - 60px);
+    }
+
+    .earthquakelist-panel {
+        display: none;
     }
 
     .table-container {
