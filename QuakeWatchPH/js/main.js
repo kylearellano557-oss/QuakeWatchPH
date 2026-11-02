@@ -20,6 +20,10 @@ const dropdownarrow = document.querySelector(".fa-chevron-down");
 const dropuparrow = document.querySelector(".fa-chevron-up");
 const indexpage = window.location.pathname.split("/").pop();
 
+if (selectedtheme === "dark") {
+    darkTheme();
+}
+
 function earthquakeDetails(quake) {
     const date = new Date(quake.properties?.time ?? quake.timestamp_iso);
     const modal = document.querySelector(".modal");
@@ -89,10 +93,10 @@ menuBtn.addEventListener("click", function() {
     
     if (window.innerWidth >= 768) {
         if (navbar.classList.contains("active")) {
-            searchbar.style.display = "none";
+            if (searchbar) searchbar.style.display = "none";
             earthquakeListPanel.style.display = "none";
         } else {
-            searchbar.style.display = "block";
+            if (searchbar) searchbar.style.display = "block";
             earthquakeListPanel.style.display = "block";
         }
         
@@ -101,12 +105,12 @@ menuBtn.addEventListener("click", function() {
         mapsection.style.display = "flex";
     } else {
         if (navbar.classList.contains("active")) {
-            searchbar.style.display = "none";
+            if (searchbar) searchbar.style.display = "none";
             if (indexpage != "index.html") return;
             dropdownarrow.style.display = "none";
             mapsection.style.display = "none";
         } else {
-            searchbar.style.display = "block";
+            if (searchbar) searchbar.style.display = "block";
             if (indexpage != "index.html") return;
             dropdownarrow.style.display = "block";
             mapsection.style.display = "";
@@ -147,7 +151,6 @@ function openSettings() {
     document.querySelector("#showMarkers").checked = localStorage.getItem("showMarkers") !== "false";
     document.querySelector("#showPlates").checked = localStorage.getItem("showPlates") === "true";
     document.querySelector("#showFaults").checked = localStorage.getItem("showFaults") === "true";
-    document.querySelector("#showLists").checked = localStorage.getItem("showLists") !== "false";
     document.querySelector("#theme").value = localStorage.getItem("theme") || "light";
     document.querySelector("#quakeFilter").value = localStorage.getItem("quakeFilter") || "7";
     
@@ -166,14 +169,12 @@ function openSettings() {
         const showMarkers = document.getElementById("showMarkers").checked;
         const showPlates = document.getElementById("showPlates").checked;
         const showFaults = document.getElementById("showFaults").checked;
-        const showLists = document.getElementById("showLists").checked;
         const theme = document.getElementById('theme').value;
         const quakeFilter = document.getElementById("quakeFilter").value;
 
         localStorage.setItem("showMarkers", showMarkers);
         localStorage.setItem("showPlates", showPlates);
         localStorage.setItem("showFaults", showFaults);
-        localStorage.setItem("showLists", showLists);
         localStorage.setItem("theme", theme);
         localStorage.setItem("quakeFilter", quakeFilter);
         
@@ -195,18 +196,6 @@ function darkTheme() {
     document.querySelectorAll(".card").forEach(card => { card.style.color = "#fff"; card.style.background = "#222"; });
 }
 
-if (selectedtheme === "dark") {
-    darkTheme();
-}
-
-if (localStorage.getItem("showLists") === "false") {
-    earthquakeListPanel.remove();
-} else if (window.innerWidth <= 768) {
-    earthquakeListPanel.style.display = "none";
-} else {
-    earthquakeListPanel.style.display = "block";
-}
-
 function dropDown() {
     mapsection.classList.toggle("opendropdown");
     dropdownarrow.classList.toggle("arrowrotate");
@@ -215,8 +204,8 @@ function dropDown() {
 }
 
 function showquakeList() {
-	dropuparrow.classList.toggle("arrowup");
-	earthquakeLists.classList.toggle("earthquakelists");
+    dropuparrow.classList.toggle("arrowup");
+    earthquakeLists.classList.toggle("earthquakelists");
 }
 
 function showFilters() {
