@@ -94,10 +94,10 @@ menuBtn.addEventListener("click", function() {
     if (window.innerWidth >= 768) {
         if (navbar.classList.contains("active")) {
             if (searchbar) searchbar.style.display = "none";
-            earthquakeListPanel.style.display = "none";
+            if (earthquakeListPanel) earthquakeListPanel.style.display = "none";
         } else {
             if (searchbar) searchbar.style.display = "block";
-            earthquakeListPanel.style.display = "block";
+            if (earthquakeListPanel) earthquakeListPanel.style.display = "block";
         }
         
         if (indexpage != "index.html") return;
