@@ -123,7 +123,7 @@ Promise.all([
         const magnitude = quake.magnitude;
         
         let color = "";
-        
+        /*
         if (magnitude <= 3.0) {
             color = "green";
         } else if (magnitude <= 4.9) {
@@ -138,6 +138,31 @@ Promise.all([
             color = "darkviolet";
         } else {
             color = "gray";
+        }
+        */
+        
+        switch (color) {
+            case magnitude <= 3.0:
+                color = "green";
+                break;
+            case magnitude <= 4.9:
+                color = "yellow";
+                break;
+            case magnitude <= 6.9:
+                color = "orange";
+                break;
+            case magnitude <= 7.9:
+                color = "red";
+                break;
+            case magnitude <= 8.9:
+                color = "darkred";
+                break;
+            case magnitude >= 9.0:
+                color = "darkviolet";
+                break;
+                
+            default:
+                color = "gray"
         }
 
         recentEarthquakes.innerHTML += `
@@ -169,6 +194,7 @@ Promise.all([
                 const targetLat = selectedQuake.latitude;
                 const targetLng = selectedQuake.longitude;
                 
+                /*
                 if (targetMag <= 3.0) {
                     targetColor = "green";
                 } else if (targetMag <= 4.9) {
@@ -184,7 +210,32 @@ Promise.all([
                 } else {
                     targetColor = "gray";
                 }
-                    
+                */
+                
+                switch (targetColor) {
+                    case targetMag <= 3.0:
+                        targetColor = "green";
+                        break;
+                    case targetMag <= 4.9:
+                        targetColor = "yellow";
+                        break;
+                    case targetMag <= 6.9:
+                        targetColor = "orange";
+                        break;
+                    case targetMag <= 7.9:
+                        targetColor = "red";
+                        break;
+                    case targetMag <= 8.9:
+                        targetColor = "darkred";
+                        break;
+                    case targetMag <= 10:
+                        targetColor = "darkviolet";
+                        break;
+                        
+                    default:
+                        targetColor = "gray";
+                }
+                
                 if (targetMag < 3.0) {
                     targetRad = 5;
                 } else {

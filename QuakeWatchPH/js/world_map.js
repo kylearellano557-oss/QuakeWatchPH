@@ -61,21 +61,31 @@ fetch(url).then(response => {
         const magnitude = quake.properties.mag;
         const date = new Date(quake.properties.time);
         
-        if (magnitude < 3.0) {
-            color = "green";
-        } else if (magnitude >= 3.0 && magnitude <= 4.9) {
-            color = "yellow";
-        } else if (magnitude >= 5.0 && magnitude <= 6.9) {
-            color = "orange";
-        } else if (magnitude >= 7.0 && magnitude <= 7.9) {
-            color = "red";
-        } else if (magnitude >= 8.0 && magnitude <= 8.9) {
-            color = "darkred";
-        } else if (magnitude >= 9.0) {
-            color = "darkviolet";
+        switch (true) {
+            case magnitude < 3.0:
+                color = "green";
+                break;
+            case magnitude >= 3.0 && magnitude <= 4.9:
+                color = "yellow";
+                break;
+            case magnitude >= 5.0 && magnitude <= 6.9:
+                color = "orange";
+                break;
+            case magnitude >= 7.0 && magnitude <= 7.9:
+                color = "red";
+                break;
+            case magnitude >= 8.0 && magnitude <= 8.9:
+                color = "darkred";
+                break;
+            case magnitude >= 9.0:
+                color = "darkviolet";
+                break;
+            default:
+                color = "gray";
         }
         
-        const marker = L.circleMarker([lat, lng], { 
+        
+        const marker = L.circleMarker([lat, lng], {
             radius: magnitude * 2, 
             fillColor: color, 
             color: "#fff", 
@@ -84,30 +94,27 @@ fetch(url).then(response => {
             fillOpacity: 0.8 
         });
         
-        if (magnitude < 3.0 && localStorage.getItem("minorLevel") !== "false") {
-            if (localStorage.getItem("showMarkers") !== "false") {
-                marker.addTo(map);
-            }
-        } else if (magnitude >= 3.0 && magnitude <= 4.9  && localStorage.getItem("lightLevel") !== "false") {
-            if (localStorage.getItem("showMarkers") !== "false") {
-                marker.addTo(map);
-            }
-        } else if (magnitude >= 5.0 && magnitude <= 6.9 && localStorage.getItem("moderateLevel") !== "false") {
-            if (localStorage.getItem("showMarkers") !== "false") {
-                marker.addTo(map);
-            }
-        } else if (magnitude >= 7.0 && magnitude <= 7.9 && localStorage.getItem("strongLevel") !== "false") {
-            if (localStorage.getItem("showMarkers") !== "false") {
-                marker.addTo(map);
-            }
-        } else if (magnitude >= 8.0 && magnitude <= 8.9 && localStorage.getItem("veryStrongLevel") !== "false") {
-            if (localStorage.getItem("showMarkers") !== "false") {
-                marker.addTo(map);
-            }
-        } else if (magnitude >= 9.0 && localStorage.getItem("destructiveLevel") !== "false") {
-            if (localStorage.getItem("showMarkers") !== "false") {
-                marker.addTo(map);
-            }
+        switch (true) {
+            case magnitude < 3.0 && localStorage.getItem("minorLevel") !== "false":
+                if (localStorage.getItem("showMarkers") !== "false") marker.addTo(map);
+                break;
+            case magnitude >= 3.0 && magnitude <= 4.9 && localStorage.getItem("lightLevel") !== "false":
+                if (localStorage.getItem("showMarkers") !== "false") marker.addTo(map);
+                break;
+            case magnitude >= 5.0 && magnitude <= 6.9 && localStorage.getItem("moderateLevel") !== "false":
+                if (localStorage.getItem("showMarkers") !== "false") marker.addTo(map);
+                break;
+            case magnitude >= 7.0 && magnitude <= 7.9 && localStorage.getItem("strongLevel") !== "false":
+                if (localStorage.getItem("showMarkers") !== "false") marker.addTo(map);
+                break;
+            case magnitude >= 8.0 && magnitude <= 8.9 && localStorage.getItem("veryStrongLevel") !== "false":
+                if (localStorage.getItem("showMarkers") !== "false") marker.addTo(map);
+                break;
+            case magnitude >= 9.0 && localStorage.getItem("destructiveLevel") !== "false":
+                if (localStorage.getItem("showMarkers") !== "false") marker.addTo(map);
+                break;
+            default:
+                break;
         }
         
         marker.bindPopup(`
@@ -188,9 +195,7 @@ fetch(url).then(response => {
             }
         });
         
-        if (localStorage.getItem("showPlates") === "true") {
-            plateLayer.addTo(map);
-        }
+        if (localStorage.getItem("showPlates") === "true") plateLayer.addTo(map);
         
     });
     
@@ -208,9 +213,7 @@ fetch(url).then(response => {
             }
         });
         
-        if (localStorage.getItem("showFaults") === "true") {
-            faultLayer.addTo(map);
-        }
+        if (localStorage.getItem("showFaults") === "true") faultLayer.addTo(map);
         
     });
     
@@ -230,17 +233,20 @@ searchQuake.addEventListener("input", function() {
     fetch(url).then(response => {
         return response.json();
     }).then(data => {
+        const earthquakeData = data.earthquakes.filter(quake => {
+            const quakeTime = new Date(quake.timestamp_iso);
+            return (quakeTime >= starttime && quakeTime <= currentdate && quake.magnitude >= 1.0);
+        });
+        
+        const magnitude = earthquakeData.properties.mag;
         const keyword = this.value.toLowerCase();
         const results = data.features.filter(quake => {
-            if (quake.properties.mag < 3 || localStorage.getItem("minorLevel") === "false") {
-                return false;
-            } else if (quake.properties.mag >= 3 && quake.properties.mag <= 4.9 && localStorage.getItem("lightLevel") === "false") {
-                return false;
-            } else if (quake.properties.mag >= 5 && quake.properties.mag <= 6.9 && localStorage.getItem("moderateLevel") === "false") {
-                return false;
-            } else if (quake.properties.mag > 7 && localStorage.getItem("strongLevel") === "false") {
-                return false;
-            }
+            if (magnitude < 3.0 || localStorage.getItem("minorLevel") === "false") return false;
+            if (magnitude >= 3.0 && magnitude <= 4.9 || localStorage.getItem("lightLevel") === "false") return false;
+            if (magnitude >= 5.0 && magnitude <= 6.9 || localStorage.getItem("moderateLevel") === "false") return false;
+            if (magnitude >= 7.0 && magnitude <= 7.9 || localStorage.getItem("strongLevel") === "false") return false;
+            if (magnitude >= 8.0 && magnitude <= 8.9 || localStorage.getItem("veryStrongLevel") === "false") return false;
+            if (magnitude >= 9.0 || localStorage.getItem("destructiveLevel") === "false") return false;
             
             return quake.properties.place.toLowerCase().includes(keyword);
         });
