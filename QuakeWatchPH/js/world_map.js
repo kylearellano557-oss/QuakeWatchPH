@@ -233,15 +233,15 @@ searchQuake.addEventListener("input", function() {
     fetch(url).then(response => {
         return response.json();
     }).then(data => {
-        const earthquakeData = data.earthquakes.filter(quake => {
+        const earthquakeData = data.features.filter(quake => {
             const quakeTime = new Date(quake.timestamp_iso);
             return (quakeTime >= starttime && quakeTime <= currentdate && quake.magnitude >= 1.0);
         });
         
-        const magnitude = earthquakeData.properties.mag;
+        const magnitude = earthquakeData.mag;
         const keyword = this.value.toLowerCase();
         const results = data.features.filter(quake => {
-            if (magnitude < 3.0 || localStorage.getItem("minorLevel") === "false") return false;
+            if (magnitude < 3.0 && localStorage.getItem("minorLevel") === "false") return false;
             if (magnitude >= 3.0 && magnitude <= 4.9 || localStorage.getItem("lightLevel") === "false") return false;
             if (magnitude >= 5.0 && magnitude <= 6.9 || localStorage.getItem("moderateLevel") === "false") return false;
             if (magnitude >= 7.0 && magnitude <= 7.9 || localStorage.getItem("strongLevel") === "false") return false;
