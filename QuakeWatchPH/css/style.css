@@ -305,8 +305,8 @@ body.modal-open {
 }
 
 #earthquakeLists {
+    display: block;
     position: relative;
-    visibility: visible;
     background-color: #ffffffaa;
     border-radius: 5px;
     height: 50vh;
@@ -316,7 +316,7 @@ body.modal-open {
 }
 
 #earthquakeLists.earthquakelists {
-    visibility: hidden;
+    display: none;
 }
 
 #earthquakeLists .earthquake-detail {
